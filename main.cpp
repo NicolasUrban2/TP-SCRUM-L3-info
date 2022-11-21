@@ -17,7 +17,12 @@ void parser(string directory);
 
 int main(int argvc, char *argv[])
 {
-	parser("CORPUS_TRAIN/");
+	if(argvc != 2)
+	{
+		cerr<<"Nombre d'arguments incorrect"<<endl;
+		return -1;
+	}
+	parser(argv[1]);
 	return 0;
 }
 
