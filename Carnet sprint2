@@ -1,6 +1,10 @@
-[terminé] Fonction de conversion de pdf vers txt :
+[terminé] (version C++) Fonction de conversion de pdf vers txt :
   temps estimé : 1 heure 
-[terminé] Fonction de récupération du contenu d'un fichier pdf sous forme d'un string :
+[terminé] (version C++) Fonction de récupération du contenu d'un fichier pdf sous forme d'un string :
   temps estimé : 30 minutes
-Fonction de découpage d'un string en tableau de strings représentants des mots et sauts de ligne :
-  temps estimé : 1 demi journée
+[terminé] (version C++) Fonction de récupération du titre d'un article PDF sous forme d'un string :
+  temps estimé : 30 minutes
+[terminé] (version C++)  Fonction de récupération du résumé d'un article PDF sous forme d'un string :
+  temps estimé : 15 minutes
+[terminé] (version C++) Fonction analysant tous les PDF d'un pour en ressortir, dans un sous répertoire, les fichier .txt contenants le nom du fichier, le titre de l'article et le résumé :
+  temps estimé : 2h30
