@@ -11,7 +11,7 @@ using namespace std;
 
 void convertirPDF(string file);
 string recupererText(string file);
-string chercherTitre(string texte);
+string chercherTitre(string texte, int *posFin);
 string chercherAbstract(string texte);
 void parser(string directory);
 
@@ -57,7 +57,8 @@ void parser(string directory)
 			texte = recupererText(directory+currentFile);	// Récupère le texte du PDF
 
 			string titre;
-			titre = chercherTitre(texte);	// Récupère le titre du PDF
+			int posFinTitre;
+			titre = chercherTitre(texte, &posFinTitre);	// Récupère le titre du PDF
 
 			string abstract;
 			abstract = chercherAbstract(texte);	// Récupère le résumé du PDF
@@ -99,7 +100,7 @@ string chercherAbstract(string texte)
  * 	Récupère la première ligne de "texte" (qui représente en général le titre)
  */
 
-string chercherTitre(string texte)
+string chercherTitre(string texte, int *posFin)
 {
 	string titre;
 	size_t posTitre = 0;
@@ -148,8 +149,9 @@ string chercherTitre(string texte)
 			}
 		}
 	}
-
-	titre = texte.substr(posTitre, texte.find("\n", posTitre+1)-(posTitre));
+	int posFinTitre = texte.find("\n", posTitre+1)-(posTitre);
+	titre = texte.substr(posTitre, posFinTitre);
+	posFin = &posFinTitre;
 	return titre;
 } 
 
