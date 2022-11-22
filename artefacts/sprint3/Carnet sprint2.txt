@@ -1,0 +1,12 @@
+Améliorer la recherche de titre en ignorant les choses au dessus de celui-ci et en récupérant la position du dernier caractère du titre.
+	Temps estimé : 3h
+Améliorer la recherche de résumé en le récupérant même s'il n'y a pas le titre "Abstract au dessus".
+	Temps estimé : 2h
+Récupérer les auteurs et leur adresse entre le titre et le résumé (ou la première partie de l'article s'il n'y a pas de résumé).
+	Temps estimé : 1h 
+Récupérer les références (toutes ce qu'il y a sous le mot "References").
+	Temps estimé : 15 minutes
+Decliner la fonction parser() en 2 versions : parserTxt() et parserXml().
+	Temps estimé : 30 minutes
+Changer le main() pour que le programme fasse appel à la fonction parserTxt() ou parserXml() en fonction du premier argument argv[1] qui sera "-x" ou "-t". Le répertoire des PDFs passera en second argument.
+	Temps estimé : 5 minutes
