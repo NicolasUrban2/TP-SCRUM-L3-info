@@ -16,16 +16,30 @@ string chercherTitre(string texte, int *posFin);
 string chercherAbstract(string texte, int *pos);
 string chercherAuteurs(string texte, int posA, int posB);
 string rechercherBiblio(string texte);
-void parser(string directory);
+void parserTxt(string directory);
+void parserXml(string directory);
 
 int main(int argvc, char *argv[])
 {
-	if(argvc != 2)
+	if(argvc != 3)
 	{
 		cerr<<"Nombre d'arguments incorrect"<<endl;
 		return -1;
 	}
-	parser(argv[1]);
+	if(strcmp(argv[1], "-t")==0)
+	{
+		parserTxt(argv[2]);
+	}
+	else if(strcmp(argv[1], "-x")==0)
+	{
+		parserXml(argv[2]);
+	}
+	else
+	{
+		cerr<<"Argument \""<<argv[1]<<"\" incorrect."<<endl;
+		return -1;
+	}
+	
 	return 0;
 }
 
@@ -34,7 +48,68 @@ int main(int argvc, char *argv[])
  *	[directory] doit avoir un '/' à la fin
  */ 
 
-void parser(string directory)
+void parserXml(string directory)
+{
+	string currentFile;
+	DIR* dir = opendir(directory.c_str());
+	struct dirent * dp;
+	dp = readdir(dir);
+
+	string removeCommand = "rm -r "+directory+"sorties/";
+	string commande = directory+"sorties/";
+	system(removeCommand.c_str());	// Supprime le sous répertoire sorties/ s'il existe déjà (n'est pas bloquant sinon)
+	//cerr<<removeCommand<<endl;
+	_mkdir(commande.c_str());	// Crée le sous répertoire sorties/ (ne fonctionnait pas avec une commande mkdir dans system())
+	//cerr<<commande.c_str()<<endl;
+	
+	// Pour chaque fichier dans le répertoire directory
+	while(dp)
+	{
+		currentFile = dp->d_name;
+		size_t extension = currentFile.find(".pdf");
+		if(extension!=string::npos)		// Traite les fichiers .pdf uniquement
+		{
+			currentFile = currentFile.substr(0, currentFile.find(".pdf"));	// Récupère le nom du fichier sans l'extension
+			string texte;
+			texte = recupererText(directory+currentFile);	// Récupère le texte du PDF
+
+			string titre;
+			int posFinTitre;
+			titre = chercherTitre(texte, &posFinTitre);	// Récupère le titre du PDF
+
+			string abstract;
+			int posDebutAbstract;
+			abstract = chercherAbstract(texte, &posDebutAbstract);	// Récupère le résumé du PDF
+
+			string auteurs;
+			auteurs = chercherAuteurs(texte, posFinTitre, posDebutAbstract);	// Récupère les auteurs et leur adresse
+
+			string references;
+			references = rechercherBiblio(texte);	// Récupère les références
+
+			// Ecrit les résultats dans un fichier .xml du même nom que le PDF dans le sous répertoire sorties/
+			string txtPath = directory+"sorties/"+currentFile+".xml";
+			ofstream flux(txtPath.c_str());
+			if(flux)
+			{
+				flux<<"<article>"<<"<preamble>"<<currentFile<<"</preamble>"<<"<titre>"<<titre<<"</titre><auteur>"<<auteurs<<"</auteur><abstract>"<<abstract<<"</abstract><biblio>"<<references<<"</biblio></article>"<<endl;
+			}
+			else
+			{
+				cerr<<"Erreur lors de l'ouverture du fichier "<<txtPath<<endl;
+			}
+		}
+		dp=readdir(dir);
+	}
+	closedir(dir);
+}
+
+/**
+ * 	Récupère le nom, le titre et le résumé de tous les articles PDF dans le répertoire et les ressort dans des .txt dans un sous répertoire
+ *	[directory] doit avoir un '/' à la fin
+ */ 
+
+void parserTxt(string directory)
 {
 	string currentFile;
 	DIR* dir = opendir(directory.c_str());
