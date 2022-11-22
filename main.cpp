@@ -6,13 +6,15 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <direct.h>
+#include <sstream>
 
 using namespace std;
 
 void convertirPDF(string file);
 string recupererText(string file);
 string chercherTitre(string texte, int *posFin);
-string chercherAbstract(string texte);
+string chercherAbstract(string texte, int *pos);
+string chercherAuteurs(string texte, int posA, int posB);
 void parser(string directory);
 
 int main(int argvc, char *argv[])
@@ -61,14 +63,18 @@ void parser(string directory)
 			titre = chercherTitre(texte, &posFinTitre);	// Récupère le titre du PDF
 
 			string abstract;
-			abstract = chercherAbstract(texte);	// Récupère le résumé du PDF
+			int posDebutAbstract;
+			abstract = chercherAbstract(texte, &posDebutAbstract);	// Récupère le résumé du PDF
+
+			string auteurs;
+			auteurs = chercherAuteurs(texte, posFinTitre, posDebutAbstract);
 
 			// Ecrit les résultats dans un fichier .txt du même nom que le PDF dans le sous répertoire sorties/
 			string txtPath = directory+"sorties/"+currentFile+".txt";
 			ofstream flux(txtPath.c_str());
 			if(flux)
 			{
-				flux<<currentFile<<"\n"<<titre<<"\n"<<abstract<<endl;
+				flux<<currentFile<<"\n"<<titre<<"\n"<<auteurs<<"\n"<<abstract<<endl;
 			}
 			else
 			{
@@ -81,23 +87,45 @@ void parser(string directory)
 }
 
 /**
- * 	Récupère la ligne de "texte" en dessous du premier mot "Abstract"
+ * 	Récupère le contenu entre le titre et ce qui est considéré comme le résumé
  */ 
 
-string chercherAbstract(string texte)
+string chercherAuteurs(string texte, int posA, int posB)
 {
-	string abstract;
-	size_t firstAbstract = texte.find("Abstract");
-	if(firstAbstract==string::npos)
+	cout<<posA<<":"<<posB<<endl;
+	return texte.substr(posA, posB-posA);
+}
+
+/**
+ * 	Récupère la ligne de "texte" en dessous du premier mot "Abstract"
+ * 	Idée d'amélioration : récupère la première ligne de plus de 150 caractères
+ */ 
+
+string chercherAbstract(string texte, int *pos)
+{
+	string abstract = "Erreur";
+	string ligne;
+	stringstream flux(texte);
+	while(getline(flux, ligne))	// Récupère chaque ligne 
 	{
-		return "Aucun resume";	
+		if(ligne.length()>150)
+		{
+			int posDebut;
+			posDebut = texte.find("Abstract");
+			if(posDebut==string::npos)
+			{
+				posDebut = texte.find(ligne);
+			}
+			*pos = posDebut;
+			return ligne;
+		}
 	}
-	abstract = texte.substr(firstAbstract+9, texte.find("\n",firstAbstract+9)-(firstAbstract+9));
+	*pos = 0;
 	return abstract;
 }
 
 /**
- * 	Récupère la première ligne de "texte" (qui représente en général le titre)
+ * 	Récupère le titre en ignorant la source, le journal et la date de soumission s'ils sont au début.
  */
 
 string chercherTitre(string texte, int *posFin)
@@ -151,7 +179,7 @@ string chercherTitre(string texte, int *posFin)
 	}
 	int posFinTitre = texte.find("\n", posTitre+1)-(posTitre);
 	titre = texte.substr(posTitre, posFinTitre);
-	posFin = &posFinTitre;
+	*posFin = posFinTitre;
 	return titre;
 } 
 
