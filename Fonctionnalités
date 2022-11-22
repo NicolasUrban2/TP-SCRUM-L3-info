@@ -1,3 +1,0 @@
-Sprint 1 : transformer un fichier PDF en fichier TXT
-Sprint 2 : Récupérer le nom, le titre et le résumé de fichiers PDF dans un répertoire contenant un article scientifique et les ressortir dans un fichier TXT dans un sous répertoire.
-Sprint 3 : En plus du nom, du résumé et du titre il faut récupérer les auteurs et les références bibliographiques. On doit avoir le choix en lançant le parseur entre une sortie dans un fichier TEXTE (-t) ou XML (-X).
