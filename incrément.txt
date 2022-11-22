@@ -1,2 +1,0 @@
-[19/11/2022] (Version C++) Possibilité de convertir les fichiers pdf en txt et d'en récupérer le contenu sous forme de string
-[21/11/2022] (Version C++) Possibilité d'analyser tous les PDF d'un répertoire et de ressortir, dans un sous répertoire, les fichiers .txt du même nom contenant le titre de fichier, le titre de l'article et le résumé s'il y en a un.
