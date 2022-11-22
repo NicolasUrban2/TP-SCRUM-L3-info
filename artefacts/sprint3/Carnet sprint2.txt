@@ -1,6 +1,6 @@
 [terminé] Améliorer la recherche de titre en ignorant les choses au dessus de celui-ci et en récupérant la position du dernier caractère du titre.
 	Temps estimé : 3h
-Améliorer la recherche de résumé en le récupérant même s'il n'y a pas le titre "Abstract au dessus".
+Améliorer la recherche de résumé en le récupérant même s'il n'y a pas le titre "Abstract au dessus". Récupérer la position du premier caratère soit du résumé soit du mot "Abstract".
 	Temps estimé : 2h
 Récupérer les auteurs et leur adresse entre le titre et le résumé (ou la première partie de l'article s'il n'y a pas de résumé).
 	Temps estimé : 1h 
