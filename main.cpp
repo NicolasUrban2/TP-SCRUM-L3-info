@@ -102,7 +102,54 @@ string chercherAbstract(string texte)
 string chercherTitre(string texte)
 {
 	string titre;
-	titre = texte.substr(0, texte.find("\n"));
+	size_t posTitre = 0;
+
+	// Cherche la position du titre du journal. S'il est avant le titre, on cherche le titre après
+	size_t posJournal = texte.find("Journal");
+	size_t posFinJournal = 0;
+	if(posJournal != string::npos)
+	{
+		if(posJournal < 10)	// Si le journal est au début (moins de 10 caractères au début du fichier)
+		{
+			posFinJournal = texte.find("\n", posJournal);
+			posFinJournal += 2;	// Prend en compte le fait qu'il y a généralement 2 sauts de lignes après
+			posTitre = posFinJournal;
+		}
+	}
+
+	// Cherche la position de la date de soumission de la même façon que le journal mais après ce dernier
+	size_t posSubmit = texte.find("Submitted");
+	size_t posFinSubmit = 0;
+	if(posSubmit != string::npos)
+	{
+		if(posSubmit < 100)	// Si la date de soumission est vers le début
+		{
+			posFinSubmit = texte.find("\n", posSubmit);
+			posFinSubmit += 2;
+			if(posFinSubmit > posFinJournal)
+			{
+				posTitre = posFinSubmit;
+			}
+		}
+	}
+
+	// Cherche la source 
+	size_t posSource = texte.find("From:");
+	size_t posFinSource = 0;
+	if(posSource != string::npos)
+	{
+		if(posSource < 50)	// Si la source est vers le début
+		{
+			posFinSource = texte.find("\n", posSource);
+			posFinSource += 2;
+			if(posFinSource > posFinJournal || posFinSource > posFinSubmit)
+			{
+				posTitre = posFinSource;
+			}
+		}
+	}
+
+	titre = texte.substr(posTitre, texte.find("\n", posTitre+1)-(posTitre));
 	return titre;
 } 
 
