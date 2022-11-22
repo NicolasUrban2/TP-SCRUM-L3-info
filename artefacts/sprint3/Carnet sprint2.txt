@@ -4,7 +4,7 @@
 	Temps estimé : 2h
 [terminé] Récupérer les auteurs et leur adresse entre le titre et le résumé (ou la première partie de l'article s'il n'y a pas de résumé).
 	Temps estimé : 1h 
-Récupérer les références (toutes ce qu'il y a sous le mot "References").
+[terminé] Récupérer les références (toutes ce qu'il y a sous le mot "References").
 	Temps estimé : 15 minutes
 Decliner la fonction parser() en 2 versions : parserTxt() et parserXml().
 	Temps estimé : 30 minutes
