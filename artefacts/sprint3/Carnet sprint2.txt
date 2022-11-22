@@ -1,6 +1,6 @@
 [terminé] Améliorer la recherche de titre en ignorant les choses au dessus de celui-ci.
 	Temps estimé : 3h
-[terminé] Améliorer la recherche de résumé en le récupérant même s'il n'y a pas le titre "Abstract au dessus".
+[terminé] Améliorer la recherche de résumé en le récupérant même s'il n'y a pas le titre "Abstract" au dessus.
 	Temps estimé : 2h
 [terminé] Récupérer les auteurs et leur adresse entre le titre et le résumé (ou la première partie de l'article s'il n'y a pas de résumé).
 	Temps estimé : 1h 
@@ -10,3 +10,5 @@
 	Temps estimé : 30 minutes
 [terminé] Changer le main() pour que le programme fasse appel à la fonction parserTxt() ou parserXml() en fonction du premier argument qui sera "-x" ou "-t". Le répertoire des PDFs passera en second argument.
 	Temps estimé : 5 minutes
+Améliorer la recherche des auteurs avec leur adresse pour de pas inclure n'importe quoi qui se trouevrait entre le titre et le résumé (les mots clés par exemple).
+	Temps estimé : 2 heures
