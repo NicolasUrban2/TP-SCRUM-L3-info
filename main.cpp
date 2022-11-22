@@ -15,6 +15,7 @@ string recupererText(string file);
 string chercherTitre(string texte, int *posFin);
 string chercherAbstract(string texte, int *pos);
 string chercherAuteurs(string texte, int posA, int posB);
+string rechercherBiblio(string texte);
 void parser(string directory);
 
 int main(int argvc, char *argv[])
@@ -67,14 +68,17 @@ void parser(string directory)
 			abstract = chercherAbstract(texte, &posDebutAbstract);	// Récupère le résumé du PDF
 
 			string auteurs;
-			auteurs = chercherAuteurs(texte, posFinTitre, posDebutAbstract);
+			auteurs = chercherAuteurs(texte, posFinTitre, posDebutAbstract);	// Récupère les auteurs et leur adresse
+
+			string references;
+			references = rechercherBiblio(texte);	// Récupère les références
 
 			// Ecrit les résultats dans un fichier .txt du même nom que le PDF dans le sous répertoire sorties/
 			string txtPath = directory+"sorties/"+currentFile+".txt";
 			ofstream flux(txtPath.c_str());
 			if(flux)
 			{
-				flux<<currentFile<<"\n"<<titre<<"\n"<<auteurs<<"\n"<<abstract<<endl;
+				flux<<currentFile<<"\n"<<titre<<"\n"<<auteurs<<"\n"<<abstract<<"\n"<<references<<endl;
 			}
 			else
 			{
@@ -87,19 +91,34 @@ void parser(string directory)
 }
 
 /**
+ * 	Récupère tout ce qui se trouve sous le mot "References"
+ */ 
+
+string rechercherBiblio(string texte)
+{
+	string references;
+	size_t posRefences = texte.find("References");
+	if(posRefences==string::npos)
+	{
+		return "Aucune reference trouvée";
+	}
+	references = texte.substr(posRefences+10, texte.find("\0")-(posRefences+10));
+	return references;
+}
+
+/**
  * 	Récupère le contenu entre le titre et ce qui est considéré comme le résumé
  */ 
 
 string chercherAuteurs(string texte, int posA, int posB)
 {
-	cout<<posA<<":"<<posB<<endl;
 	return texte.substr(posA, posB-posA);
 }
 
 /**
  * 	Récupère la ligne de "texte" en dessous du premier mot "Abstract"
  * 	Idée d'amélioration : récupère la première ligne de plus de 150 caractères
- */ 
+ */
 
 string chercherAbstract(string texte, int *pos)
 {
