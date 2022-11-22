@@ -1,4 +1,4 @@
-Améliorer la recherche de titre en ignorant les choses au dessus de celui-ci et en récupérant la position du dernier caractère du titre.
+[terminé] Améliorer la recherche de titre en ignorant les choses au dessus de celui-ci et en récupérant la position du dernier caractère du titre.
 	Temps estimé : 3h
 Améliorer la recherche de résumé en le récupérant même s'il n'y a pas le titre "Abstract au dessus".
 	Temps estimé : 2h
