@@ -6,7 +6,7 @@
 	Temps estimé : 1h 
 [terminé] Récupérer les références (toutes ce qu'il y a sous le mot "References").
 	Temps estimé : 15 minutes
-Decliner la fonction parser() en 2 versions : parserTxt() et parserXml().
+[terminé] Decliner la fonction parser() en 2 versions : parserTxt() et parserXml().
 	Temps estimé : 30 minutes
-Changer le main() pour que le programme fasse appel à la fonction parserTxt() ou parserXml() en fonction du premier argument qui sera "-x" ou "-t". Le répertoire des PDFs passera en second argument.
+[terminé] Changer le main() pour que le programme fasse appel à la fonction parserTxt() ou parserXml() en fonction du premier argument qui sera "-x" ou "-t". Le répertoire des PDFs passera en second argument.
 	Temps estimé : 5 minutes
