@@ -12,3 +12,5 @@
 	Temps estimé : 5 minutes
 Améliorer la recherche des auteurs avec leur adresse pour de pas inclure n'importe quoi qui se trouevrait entre le titre et le résumé (les mots clés par exemple).
 	Temps estimé : 2 heures
+S'assurer que les .xml de sortie soient en UTF-8.
+	Temps estimé : 30 minutes
